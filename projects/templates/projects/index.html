@@ -1,0 +1,12 @@
+<h1>Instances</h1>
+{% for instance in instances %}
+    {{ instance.id }}<br />
+{% endfor %}
+
+<h1>Addresses</h1>
+{% for address in addresses %}
+    {{ address.public_ip }}<br />
+{% endfor %}
+
+<br />
+<a href="launch/">Launch</a><br />

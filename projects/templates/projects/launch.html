@@ -1,0 +1,12 @@
+<h1>Builds</h1>
+{% for build in builds %}
+<a href="{% url 'projects-launch-build' build.name %}">{{ build.name }}</a><br />
+{% endfor %}
+
+<h1>Projects</h1>
+{% for project in projects %}
+    <a href="{% url 'projects-launch-project' project.name %}">{{ project.name }}</a><br />
+{% endfor %}
+
+<br />
+<a href="{% url 'projects-index' %}">Return</a><br />

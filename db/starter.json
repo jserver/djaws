@@ -1,0 +1,365 @@
+[
+{
+    "pk": 1, 
+    "model": "projects.build", 
+    "fields": {
+        "python_bundle": 1, 
+        "upgrade": "du", 
+        "group": 2, 
+        "name": "django", 
+        "zone": "b", 
+        "image": 2, 
+        "user_data": 1, 
+        "key": 1, 
+        "security_groups": [
+            4, 
+            5
+        ], 
+        "size": "S"
+    }
+},
+{
+    "pk": 1, 
+    "model": "projects.bundle", 
+    "fields": {
+        "packages": "autoconf automake build-essential libtool ntp", 
+        "name": "dev"
+    }
+},
+{
+    "pk": 2, 
+    "model": "projects.bundle", 
+    "fields": {
+        "packages": "apache2-utils htop python-pip sqlite3 unzip zip", 
+        "name": "etc"
+    }
+},
+{
+    "pk": 3, 
+    "model": "projects.bundle", 
+    "fields": {
+        "packages": "libfreetype6-dev libjpeg8-dev liblcms1-dev libpng12-dev libtiff4-dev libwebp-dev zlib1g-dev", 
+        "name": "img-libs"
+    }
+},
+{
+    "pk": 4, 
+    "model": "projects.bundle", 
+    "fields": {
+        "packages": "libevent-dev libgmp-dev libjson0-dev libsqlite3-dev libssl-dev libxslt1-dev libyaml-dev libzmq-dev python-dev uuid-dev", 
+        "name": "libs"
+    }
+},
+{
+    "pk": 5, 
+    "model": "projects.bundle", 
+    "fields": {
+        "packages": "bzr git mercurial", 
+        "name": "vcs"
+    }
+},
+{
+    "pk": 6, 
+    "model": "projects.bundle", 
+    "fields": {
+        "packages": "postgresql postgresql-client libpq-dev", 
+        "name": "postgres"
+    }
+},
+{
+    "pk": 1, 
+    "model": "projects.groupitem", 
+    "fields": {
+        "packages": "", 
+        "group": null, 
+        "bundle": 1
+    }
+},
+{
+    "pk": 2, 
+    "model": "projects.groupitem", 
+    "fields": {
+        "packages": "", 
+        "group": null, 
+        "bundle": 2
+    }
+},
+{
+    "pk": 3, 
+    "model": "projects.groupitem", 
+    "fields": {
+        "packages": "", 
+        "group": null, 
+        "bundle": 3
+    }
+},
+{
+    "pk": 4, 
+    "model": "projects.groupitem", 
+    "fields": {
+        "packages": "", 
+        "group": null, 
+        "bundle": 4
+    }
+},
+{
+    "pk": 5, 
+    "model": "projects.groupitem", 
+    "fields": {
+        "packages": "", 
+        "group": null, 
+        "bundle": 5
+    }
+},
+{
+    "pk": 6, 
+    "model": "projects.groupitem", 
+    "fields": {
+        "packages": "", 
+        "group": 1, 
+        "bundle": null
+    }
+},
+{
+    "pk": 7, 
+    "model": "projects.groupitem", 
+    "fields": {
+        "packages": "", 
+        "group": null, 
+        "bundle": 6
+    }
+},
+{
+    "pk": 8, 
+    "model": "projects.groupitem", 
+    "fields": {
+        "packages": "rabbitmq-server", 
+        "group": null, 
+        "bundle": null
+    }
+},
+{
+    "pk": 1, 
+    "model": "projects.grouporder", 
+    "fields": {
+        "group_item": 1, 
+        "group": 1, 
+        "order": 1
+    }
+},
+{
+    "pk": 2, 
+    "model": "projects.grouporder", 
+    "fields": {
+        "group_item": 2, 
+        "group": 1, 
+        "order": 2
+    }
+},
+{
+    "pk": 3, 
+    "model": "projects.grouporder", 
+    "fields": {
+        "group_item": 3, 
+        "group": 1, 
+        "order": 3
+    }
+},
+{
+    "pk": 4, 
+    "model": "projects.grouporder", 
+    "fields": {
+        "group_item": 4, 
+        "group": 1, 
+        "order": 4
+    }
+},
+{
+    "pk": 5, 
+    "model": "projects.grouporder", 
+    "fields": {
+        "group_item": 5, 
+        "group": 1, 
+        "order": 5
+    }
+},
+{
+    "pk": 6, 
+    "model": "projects.grouporder", 
+    "fields": {
+        "group_item": 6, 
+        "group": 2, 
+        "order": 1
+    }
+},
+{
+    "pk": 7, 
+    "model": "projects.grouporder", 
+    "fields": {
+        "group_item": 7, 
+        "group": 2, 
+        "order": 2
+    }
+},
+{
+    "pk": 8, 
+    "model": "projects.grouporder", 
+    "fields": {
+        "group_item": 8, 
+        "group": 2, 
+        "order": 3
+    }
+},
+{
+    "pk": 1, 
+    "model": "projects.group", 
+    "fields": {
+        "name": "basic"
+    }
+},
+{
+    "pk": 2, 
+    "model": "projects.group", 
+    "fields": {
+        "name": "dj-post-rabbit"
+    }
+},
+{
+    "pk": 1, 
+    "model": "projects.image", 
+    "fields": {
+        "image_id": "ami-23d9a94a", 
+        "name": "precise"
+    }
+},
+{
+    "pk": 2, 
+    "model": "projects.image", 
+    "fields": {
+        "image_id": "ami-10314d79", 
+        "name": "raring"
+    }
+},
+{
+    "pk": 3, 
+    "model": "projects.image", 
+    "fields": {
+        "image_id": "ami-9e95e8f7", 
+        "name": "wheezy"
+    }
+},
+{
+    "pk": 1, 
+    "model": "projects.key", 
+    "fields": {
+        "name": "jserver"
+    }
+},
+{
+    "pk": 1, 
+    "model": "projects.linuxuser", 
+    "fields": {
+        "password": "flypy23", 
+        "name": "joe", 
+        "full_name": "Joseph Server"
+    }
+},
+{
+    "pk": 1, 
+    "model": "projects.project", 
+    "fields": {
+        "count": 1, 
+        "linux_user": 1, 
+        "name": "django", 
+        "user_script": 2, 
+        "build": 1
+    }
+},
+{
+    "pk": 1, 
+    "model": "projects.pythonbundle", 
+    "fields": {
+        "packages": "pyflakes virtualenv virtualenvwrapper yolk", 
+        "name": "basic"
+    }
+},
+{
+    "pk": 1, 
+    "model": "projects.script", 
+    "fields": {
+        "data": "#!/bin/bash\r\nmkdir /root/a\r\nmkdir /root/b\r\nmkdir /root/c", 
+        "name": "std-user-data"
+    }
+},
+{
+    "pk": 2, 
+    "model": "projects.script", 
+    "fields": {
+        "data": "#!/bin/bash\r\nmkdir a b c", 
+        "name": "user-script"
+    }
+},
+{
+    "pk": 1, 
+    "model": "projects.securitygroup", 
+    "fields": {
+        "name": "djnode-flask"
+    }
+},
+{
+    "pk": 2, 
+    "model": "projects.securitygroup", 
+    "fields": {
+        "name": "full-dev"
+    }
+},
+{
+    "pk": 3, 
+    "model": "projects.securitygroup", 
+    "fields": {
+        "name": "prod-web"
+    }
+},
+{
+    "pk": 4, 
+    "model": "projects.securitygroup", 
+    "fields": {
+        "name": "serverstyle"
+    }
+},
+{
+    "pk": 5, 
+    "model": "projects.securitygroup", 
+    "fields": {
+        "name": "django-dev"
+    }
+},
+{
+    "pk": 6, 
+    "model": "projects.securitygroup", 
+    "fields": {
+        "name": "ssh-only"
+    }
+},
+{
+    "pk": 7, 
+    "model": "projects.securitygroup", 
+    "fields": {
+        "name": "flask-dev"
+    }
+},
+{
+    "pk": 8, 
+    "model": "projects.securitygroup", 
+    "fields": {
+        "name": "eighty-eighty-dev"
+    }
+},
+{
+    "pk": 9, 
+    "model": "projects.securitygroup", 
+    "fields": {
+        "name": "mongrel2-dev"
+    }
+}
+]

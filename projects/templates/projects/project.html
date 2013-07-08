@@ -1,0 +1,10 @@
+{% if result %}
+    {{ result.id }}<br />
+{% endif %}
+<br />
+<form action="." method="post">{% csrf_token %}
+    Name: <input type="text" name="name">
+    <input type="submit" value="Submit">
+</form>
+<br />
+<a href="{% url 'projects-index' %}">Return</a><br />

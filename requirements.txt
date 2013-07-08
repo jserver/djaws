@@ -1,0 +1,13 @@
+Celery
+Django
+Fabric
+Pillow
+South
+
+boto
+bpython
+django-celery
+django-taggit
+psycopg2
+requests
+yolk
