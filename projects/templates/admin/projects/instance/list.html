@@ -1,0 +1,74 @@
+{% extends "admin/change_list.html" %}
+{% load i18n admin_static admin_list instance_tags %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+&rsaquo; <a href="{% url 'admin:app_list' app_label='projects' %}">Projects</a>
+&rsaquo; Instance List
+</div>
+{% endblock %}
+
+{% block content %}
+  <div id="content-main">
+    <h1>Instances</h1>
+    <div class="module" id="changelist">
+        {% if instances %}
+        <div class="results">
+        <table id="result_list">
+        <thead>
+        <tr>
+        <th scope="col">
+           <div class="text"><span>Name</span></div>
+           <div class="clear"></div>
+        </th>
+        <th scope="col">
+           <div class="text"><span>Instance ID</span></div>
+           <div class="clear"></div>
+        </th>
+        <th scope="col">
+           <div class="text"><span>State</span></div>
+           <div class="clear"></div>
+        </th>
+        <th scope="col">
+           <div class="text"><span>Zone</span></div>
+           <div class="clear"></div>
+        </th>
+        <th scope="col">
+           <div class="text"><span>Type</span></div>
+           <div class="clear"></div>
+        </th>
+        <th scope="col">
+           <div class="text"><span>Arch</span></div>
+           <div class="clear"></div>
+        </th>
+        <th scope="col">
+           <div class="text"><span>RootDevice</span></div>
+           <div class="clear"></div>
+        </th>
+        <th scope="col">
+           <div class="text"><span>Public DNS</span></div>
+           <div class="clear"></div>
+        </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for instance in instances %}
+        <tr class="{% cycle 'row1' 'row2' %}">
+            <td>{% get_name_tag instance %}</td>
+            <td>{{ instance.id }}</td>
+            <td>{{ instance.state }}</td>
+            <td>{{ instance.placement }}</td>
+            <td>{{ instance.instance_type }}</td>
+            <td>{{ instance.architecture }}</td>
+            <td>{{ instance.root_device_type }}</td>
+            <td>{{ instance.public_dns_name }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+        </div>
+        {% endif %}
+    </div>
+  </div>
+{% endblock %}

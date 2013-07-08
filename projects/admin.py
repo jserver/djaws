@@ -2,6 +2,8 @@ from django.conf.urls import patterns
 from django.contrib import admin
 from django.shortcuts import render
 
+import boto
+
 from models import (Build, Bundle, Group, GroupItem,
                     Image, Instance, Key, LinuxUser, Project,
                     PythonBundle, Script, SecurityGroup)
@@ -34,17 +36,38 @@ class ImageAdmin(admin.ModelAdmin):
 class InstanceAdmin(admin.ModelAdmin):
     def get_urls(self):
         urls = super(InstanceAdmin, self).get_urls()
-        my_urls = patterns('',
-            (r'^my_view/$', self.admin_site.admin_view(self.my_view))
+        instance_urls = patterns('',
+            (r'^list/$', self.admin_site.admin_view(self.list_view)),
+            (r'^addresses/$', self.admin_site.admin_view(self.addresses_view)),
         )
-        return my_urls + urls
+        return instance_urls + urls
 
-    def my_view(self, request):
+    def list_view(self, request):
+        conn = boto.connect_ec2()
+        reservations = conn.get_all_instances()
+        instances = []
+        for res in reservations:
+            for instance in res.instances:
+                instances.append(instance)
+
         context = {
-            'current_app': self.admin_site.name
+            'current_app': self.admin_site.name,
+            'instances': instances,
         }
-        template = 'admin/projects/my_view.html'
+        template = 'admin/projects/instance/list.html'
         return render(request, template, context)
+
+    def addresses_view(self, request):
+        conn = boto.connect_ec2()
+        addresses = conn.get_all_addresses()
+
+        context = {
+            'current_app': self.admin_site.name,
+            'addresses': addresses,
+        }
+        template = 'admin/projects/instance/addresses.html'
+        return render(request, template, context)
+
 
 
 class KeyAdmin(admin.ModelAdmin):

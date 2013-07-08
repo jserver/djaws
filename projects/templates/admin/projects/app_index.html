@@ -1,0 +1,12 @@
+{% extends "admin/index.html" %}
+{% load i18n %}
+
+{% block sidebar %}
+<div id="content-related">
+    <div class="module" id="recent-actions-module">
+        <h2>{% trans 'AWS Support' %}</h2>
+        <h3><a href="./instance/list/">Instances</a></h3>
+        <h3><a href="./instance/addresses/">IP Addresses</a></h3>
+    </div>
+</div>
+{% endblock %}
