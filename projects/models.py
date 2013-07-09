@@ -2,6 +2,17 @@ from django.db import models
 
 
 # Create your models here.
+class Address(models.Model):
+    public_ip = models.CharField(max_length=15)
+
+    class Meta:
+        ordering = ('public_ip',)
+        verbose_name_plural = 'addresses'
+
+    def __unicode__(self):
+        return self.publc_ip
+
+
 class Build(models.Model):
     SIZE_CHOICES = (
         ('m', 't1.micro'),
@@ -23,13 +34,16 @@ class Build(models.Model):
     name = models.CharField(max_length=20)
     size = models.CharField(max_length=2, choices=SIZE_CHOICES)
     image = models.ForeignKey('Image')
-    key = models.ForeignKey('Key')
+    key = models.ForeignKey('Key', null=True, on_delete=models.SET_NULL)
     zone = models.CharField(max_length=1, choices=ZONE_CHOICES, blank=True)
     security_groups = models.ManyToManyField('SecurityGroup')
     group = models.ForeignKey('Group')
     python_bundle = models.ForeignKey('PythonBundle')
     user_data = models.ForeignKey('Script')
     upgrade = models.CharField(max_length=2, choices=UPGRADE_CHOICES, blank=True)
+
+    class Meta:
+        ordering = ('name',)
 
     def __unicode__(self):
         return self.name
@@ -38,6 +52,9 @@ class Build(models.Model):
 class Bundle(models.Model):
     name = models.CharField(max_length=20)
     packages = models.CharField(max_length=255)
+
+    class Meta:
+        ordering = ('name',)
 
     def __unicode__(self):
         return self.name
@@ -69,6 +86,9 @@ class Group(models.Model):
     name = models.CharField(max_length=20)
     items = models.ManyToManyField('GroupItem', through='GroupOrder', related_name='parent')
 
+    class Meta:
+        ordering = ('name',)
+
     def __unicode__(self):
         return self.name
 
@@ -76,6 +96,9 @@ class Group(models.Model):
 class Image(models.Model):
     image_id = models.CharField(max_length=20)
     name = models.CharField(max_length=20)
+
+    class Meta:
+        ordering = ('name',)
 
     def __unicode__(self):
         return self.name
@@ -85,12 +108,18 @@ class Instance(models.Model):
     inst_id = models.CharField(max_length=10)
     name = models.CharField(max_length=20)
 
+    class Meta:
+        ordering = ('name',)
+
     def __unicode__(self):
         return self.name
 
 
 class Key(models.Model):
     name = models.CharField(max_length=20)
+
+    class Meta:
+        ordering = ('name',)
 
     def __unicode__(self):
         return self.name
@@ -100,6 +129,9 @@ class LinuxUser(models.Model):
     name = models.CharField(max_length=40)
     full_name = models.CharField(max_length=40)
     password = models.CharField(max_length=40)
+
+    class Meta:
+        ordering = ('name',)
 
     def __unicode__(self):
         return self.name
@@ -112,6 +144,9 @@ class Project(models.Model):
     linux_user = models.ForeignKey('LinuxUser')
     user_script = models.ForeignKey('Script')
 
+    class Meta:
+        ordering = ('name',)
+
     def __unicode__(self):
         return self.name
 
@@ -119,6 +154,9 @@ class Project(models.Model):
 class PythonBundle(models.Model):
     name = models.CharField(max_length=20)
     packages = models.CharField(max_length=255)
+
+    class Meta:
+        ordering = ('name',)
 
     def __unicode__(self):
         return self.name
@@ -128,12 +166,20 @@ class Script(models.Model):
     name = models.CharField(max_length=20)
     data = models.TextField()
 
+    class Meta:
+        ordering = ('name',)
+
     def __unicode__(self):
         return self.name
 
 
 class SecurityGroup(models.Model):
+    id = models.CharField(max_length=11, primary_key=True)
     name = models.CharField(max_length=20)
+    description = models.CharField(max_length=255)
+
+    class Meta:
+        ordering = ('name',)
 
     def __unicode__(self):
         return self.name

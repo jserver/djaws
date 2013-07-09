@@ -12,8 +12,7 @@
         "user_data": 1, 
         "key": 1, 
         "security_groups": [
-            4, 
-            5
+            "sg-84b5e5ed"
         ], 
         "size": "S"
     }
@@ -300,66 +299,75 @@
     }
 },
 {
-    "pk": 1, 
+    "pk": "sg-1f15b477", 
     "model": "projects.securitygroup", 
     "fields": {
-        "name": "djnode-flask"
+        "name": "mongrel2-dev", 
+        "description": "Brubeck Development Machines"
     }
 },
 {
-    "pk": 2, 
+    "pk": "sg-28e07040", 
     "model": "projects.securitygroup", 
     "fields": {
-        "name": "full-dev"
+        "name": "eighty-eighty-dev", 
+        "description": "The Ever Popular 8080"
     }
 },
 {
-    "pk": 3, 
+    "pk": "sg-34e0705c", 
     "model": "projects.securitygroup", 
     "fields": {
-        "name": "prod-web"
+        "name": "full-dev", 
+        "description": "All Dev Ports Open"
     }
 },
 {
-    "pk": 4, 
+    "pk": "sg-5b4cc933", 
     "model": "projects.securitygroup", 
     "fields": {
-        "name": "serverstyle"
+        "name": "flask-dev", 
+        "description": "Flask Development Machines"
     }
 },
 {
-    "pk": 5, 
+    "pk": "sg-84b5e5ed", 
     "model": "projects.securitygroup", 
     "fields": {
-        "name": "django-dev"
+        "name": "django-dev", 
+        "description": "Django Development Machines"
     }
 },
 {
-    "pk": 6, 
+    "pk": "sg-91d169f9", 
     "model": "projects.securitygroup", 
     "fields": {
-        "name": "ssh-only"
+        "name": "ssh-only", 
+        "description": "Nothing Open Besides SSH"
     }
 },
 {
-    "pk": 7, 
+    "pk": "sg-95509afe", 
     "model": "projects.securitygroup", 
     "fields": {
-        "name": "flask-dev"
+        "name": "serverstyle", 
+        "description": "My go rpc project"
     }
 },
 {
-    "pk": 8, 
+    "pk": "sg-af2378c6", 
     "model": "projects.securitygroup", 
     "fields": {
-        "name": "eighty-eighty-dev"
+        "name": "prod-web", 
+        "description": "Production Web Servers"
     }
 },
 {
-    "pk": 9, 
+    "pk": "sg-f62a649f", 
     "model": "projects.securitygroup", 
     "fields": {
-        "name": "mongrel2-dev"
+        "name": "default", 
+        "description": "default group"
     }
 }
 ]

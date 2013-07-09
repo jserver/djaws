@@ -1,12 +1,22 @@
-{% extends "admin/index.html" %}
+{% extends "admin/app_index.html" %}
 {% load i18n %}
 
 {% block sidebar %}
 <div id="content-related">
     <div class="module" id="recent-actions-module">
-        <h2>{% trans 'AWS Support' %}</h2>
-        <h3><a href="./instance/list/">Instances</a></h3>
-        <h3><a href="./instance/addresses/">IP Addresses</a></h3>
+      <h2>{% trans 'AWS Support' %}</h2>
+      <h3>Instance</h3>
+      <ul class="actionlist">
+        <li><a href="./instance/reboot/">Reboot</a></li>
+        <li><a href="./instance/start/">Start</a></li>
+        <li><a href="./instance/start/">Stop</a></li>
+        <li><a href="./instance/start/">Terminate</a></li>
+      </ul>
+      <h3>Address</h3>
+      <ul class="actionlist">
+        <li><a href="./address/associate/">Associate</a></li>
+        <li><a href="./address/disassociate/">Disassociate</a></li>
+      </ul>
     </div>
 </div>
 {% endblock %}
