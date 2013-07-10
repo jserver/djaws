@@ -117,21 +117,21 @@ class InstanceAdmin(admin.ModelAdmin):
         context = {
             'current_app': self.admin_site.name,
         }
-        template = 'admin/projects/instance/reboot.html'
+        template = 'admin/projects/instance/start.html'
         return render(request, template, context)
 
     def stop_view(self, request):
         context = {
             'current_app': self.admin_site.name,
         }
-        template = 'admin/projects/instance/reboot.html'
+        template = 'admin/projects/instance/stop.html'
         return render(request, template, context)
 
     def terminate_view(self, request):
         context = {
             'current_app': self.admin_site.name,
         }
-        template = 'admin/projects/instance/reboot.html'
+        template = 'admin/projects/instance/terminate.html'
         return render(request, template, context)
 
 
