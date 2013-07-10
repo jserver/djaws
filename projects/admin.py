@@ -17,9 +17,18 @@ class AddressAdmin(admin.ModelAdmin):
         conn = boto.connect_ec2()
         addresses = conn.get_all_addresses()
 
+        reservations = conn.get_all_instances()
+        instances = []
+        for res in reservations:
+            for instance in res.instances:
+                if (instance.state != "terminated" and
+                    instance.id not in [address.instance_id for address in addresses]):
+                    instances.append(instance)
+
         context = {
             'current_app': self.admin_site.name,
             'addresses': addresses,
+            'instances': instances,
         }
         template = 'admin/projects/address/list.html'
         return render(request, template, context)

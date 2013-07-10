@@ -36,7 +36,17 @@
         {% for address in addresses %}
         <tr class="{% cycle 'row1' 'row2' %}">
             <td>{{ address.public_ip }}</td>
-            <td>{{ address.instance_id }}</td>
+            <td>{% if address.instance_id %}
+                  {{ address.instance_id }}</td>
+                {% else %}
+                  <form method="post" action="./associate/">
+                    <select name="select-ip">
+                    {% for instance in instances %}
+                      <option value="{{ instance.id }}">{% get_name_tag instance %}</option>
+                    {% endfor %}
+                    </select>
+                  </form>
+                {% endif %}
             <td>{% get_name_tag address.instance_id %}</td>
         </tr>
         {% endfor %}
