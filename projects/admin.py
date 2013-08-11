@@ -27,6 +27,7 @@ class AddressAdmin(admin.ModelAdmin):
 
         context = {
             'current_app': self.admin_site.name,
+            'app_label': 'projects',
             'addresses': addresses,
             'instances': instances,
         }
@@ -91,6 +92,7 @@ class InstanceAdmin(admin.ModelAdmin):
 
         context = {
             'current_app': self.admin_site.name,
+            'app_label': 'projects',
             'instances': instances,
         }
         template = 'admin/projects/instance/list.html'
@@ -99,12 +101,37 @@ class InstanceAdmin(admin.ModelAdmin):
     def get_urls(self):
         urls = super(InstanceAdmin, self).get_urls()
         custom_urls = patterns('',
+            (r'^launch/$', self.admin_site.admin_view(self.launch_view)),
+            (r'^build/$', self.admin_site.admin_view(self.build_view)),
+            (r'^project/$', self.admin_site.admin_view(self.project_view)),
             (r'^reboot/$', self.admin_site.admin_view(self.reboot_view)),
             (r'^start/$', self.admin_site.admin_view(self.start_view)),
             (r'^stop/$', self.admin_site.admin_view(self.stop_view)),
             (r'^terminate/$', self.admin_site.admin_view(self.terminate_view)),
         )
         return custom_urls + urls
+
+    def launch_view(self, request):
+        context = {
+            'current_app': self.admin_site.name,
+            'app_label': 'projects',
+        }
+        template = 'admin/projects/instance/launch.html'
+        return render(request, template, context)
+
+    def build_view(self, request):
+        context = {
+            'current_app': self.admin_site.name,
+        }
+        template = 'admin/projects/instance/build.html'
+        return render(request, template, context)
+
+    def project_view(self, request):
+        context = {
+            'current_app': self.admin_site.name,
+        }
+        template = 'admin/projects/instance/project.html'
+        return render(request, template, context)
 
     def reboot_view(self, request):
         context = {
@@ -172,8 +199,13 @@ class LinuxUserAdmin(admin.ModelAdmin):
     list_display = ('name', 'full_name')
 
 
+class BuildInline(admin.TabularInline):
+    model = Project.builds.through
+
+
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('name', 'build', 'count', 'linux_user', 'user_script')
+    inlines = (BuildInline,)
+    list_display = ('name', 'linux_user', 'user_script')
 
 
 class PythonBundleAdmin(admin.ModelAdmin):

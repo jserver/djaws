@@ -265,13 +265,21 @@
 },
 {
     "pk": 1, 
+    "model": "projects.buildorder", 
+    "fields": {
+        "build": 1, 
+        "project": 1, 
+        "count": 1, 
+        "order": 1
+    }
+},
+{
+    "pk": 1, 
     "model": "projects.project", 
     "fields": {
-        "count": 1, 
-        "linux_user": 1, 
         "name": "django", 
-        "user_script": 2, 
-        "build": 1
+        "linux_user": 1, 
+        "user_script": 2
     }
 },
 {
