@@ -9,7 +9,7 @@ urlpatterns = patterns('',
     # url(r'^$', 'djaws.views.home', name='home'),
     # url(r'^djaws/', include('djaws.foo.urls')),
 
-    url(r'^projects/', include('projects.urls')),
+    url(r'^aws/', include('aws.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

@@ -130,7 +130,7 @@ INSTALLED_APPS = (
 
     'djcelery',
 
-    'projects',
+    'aws',
 )
 
 # A sample logging configuration. The only tangible logging

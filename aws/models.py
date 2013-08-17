@@ -14,8 +14,8 @@ class Address(models.Model):
 
 
 class BuildOrder(models.Model):
-    build = models.ForeignKey('projects.Build')
-    project = models.ForeignKey('projects.Project')
+    build = models.ForeignKey('aws.Build')
+    project = models.ForeignKey('aws.Project')
     count = models.IntegerField(default=1)
     order = models.IntegerField(default=1)
 
@@ -43,13 +43,13 @@ class Build(models.Model):
     )
     name = models.CharField(max_length=20)
     size = models.CharField(max_length=2, choices=SIZE_CHOICES)
-    image = models.ForeignKey('projects.Image')
-    key = models.ForeignKey('projects.Key', null=True, on_delete=models.SET_NULL)
+    image = models.ForeignKey('aws.Image')
+    key = models.ForeignKey('aws.Key', null=True, on_delete=models.SET_NULL)
     zone = models.CharField(max_length=1, choices=ZONE_CHOICES, blank=True)
-    security_groups = models.ManyToManyField('projects.SecurityGroup')
-    group = models.ForeignKey('Group')
-    python_bundle = models.ForeignKey('projects.PythonBundle')
-    user_data = models.ForeignKey('projects.Script')
+    security_groups = models.ManyToManyField('aws.SecurityGroup')
+    group = models.ForeignKey('aws.Group')
+    python_bundle = models.ForeignKey('aws.PythonBundle')
+    user_data = models.ForeignKey('aws.Script')
     upgrade = models.CharField(max_length=2, choices=UPGRADE_CHOICES, blank=True)
 
     class Meta:
@@ -71,8 +71,8 @@ class Bundle(models.Model):
 
 
 class GroupItem(models.Model):
-    group = models.ForeignKey('projects.Group', null=True, blank=True)
-    bundle = models.ForeignKey('projects.Bundle', null=True, blank=True)
+    group = models.ForeignKey('aws.Group', null=True, blank=True)
+    bundle = models.ForeignKey('aws.Bundle', null=True, blank=True)
     packages = models.CharField(max_length=255, null=True, blank=True)
 
     def __unicode__(self):
@@ -87,8 +87,8 @@ class GroupItem(models.Model):
 
 
 class GroupOrder(models.Model):
-    group = models.ForeignKey('projects.Group')
-    group_item = models.ForeignKey('projects.GroupItem')
+    group = models.ForeignKey('aws.Group')
+    group_item = models.ForeignKey('aws.GroupItem')
     order = models.IntegerField(default=0)
 
     def __unicode__(self):
@@ -97,7 +97,7 @@ class GroupOrder(models.Model):
 
 class Group(models.Model):
     name = models.CharField(max_length=20)
-    items = models.ManyToManyField('projects.GroupItem', through='projects.GroupOrder', related_name='parent')
+    items = models.ManyToManyField('aws.GroupItem', through='aws.GroupOrder', related_name='parent')
 
     class Meta:
         ordering = ('name',)
@@ -152,9 +152,9 @@ class LinuxUser(models.Model):
 
 class Project(models.Model):
     name = models.CharField(max_length=20)
-    builds = models.ManyToManyField('projects.Build', through='projects.BuildOrder')
-    linux_user = models.ForeignKey('projects.LinuxUser')
-    user_script = models.ForeignKey('projects.Script')
+    builds = models.ManyToManyField('aws.Build', through='aws.BuildOrder')
+    linux_user = models.ForeignKey('aws.LinuxUser')
+    user_script = models.ForeignKey('aws.Script')
 
     class Meta:
         ordering = ('name',)

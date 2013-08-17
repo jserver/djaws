@@ -2,8 +2,8 @@ from django.shortcuts import render
 
 import boto
 
-from projects.models import Build, Project
-from projects.tasks import build_task, project_task
+from aws.models import Build, Project
+from aws.tasks import build_task, project_task
 
 
 # Create your views here.
@@ -21,7 +21,7 @@ def index(request):
         'addresses': addresses,
         'instances': instances,
     }
-    template = 'projects/index.html'
+    template = 'aws/index.html'
     return render(request, template, context)
 
 
@@ -34,7 +34,7 @@ def launch(request):
         'builds': builds,
         'projects': projects,
     }
-    template = 'projects/launch.html'
+    template = 'aws/launch.html'
     return render(request, template, context)
 
 
@@ -45,7 +45,7 @@ def launch_build(request, build_name):
         build = Build.objects.get(name=build_name)
         result = build_task.delay(build, name)
         context['result'] = result
-    template = 'projects/build.html'
+    template = 'aws/build.html'
     return render(request, template, context)
 
 
@@ -56,5 +56,5 @@ def launch_project(request, project_name):
         project = Project.objects.get(name=project_name)
         result = project_task.delay(project, name)
         context['result'] = result
-    template = 'projects/project.html'
+    template = 'aws/project.html'
     return render(request, template, context)

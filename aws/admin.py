@@ -4,9 +4,9 @@ from django.shortcuts import redirect, render
 
 import boto
 
-from models import (Address, Build, Bundle, Group, Image,
-                    Instance, Key, LinuxUser, Project,
-                    PythonBundle, Script, SecurityGroup)
+from aws.models import (Address, Build, Bundle, Group, Image,
+                        Instance, Key, LinuxUser, Project,
+                        PythonBundle, Script, SecurityGroup)
 
 
 class AddressAdmin(admin.ModelAdmin):
@@ -27,11 +27,11 @@ class AddressAdmin(admin.ModelAdmin):
 
         context = {
             'current_app': self.admin_site.name,
-            'app_label': 'projects',
+            'app_label': 'aws',
             'addresses': addresses,
             'instances': instances,
         }
-        template = 'admin/projects/address/list.html'
+        template = 'admin/aws/address/list.html'
         return render(request, template, context)
 
     def get_urls(self):
@@ -46,14 +46,14 @@ class AddressAdmin(admin.ModelAdmin):
         context = {
             'current_app': self.admin_site.name,
         }
-        template = 'admin/projects/address/associate.html'
+        template = 'admin/aws/address/associate.html'
         return render(request, template, context)
 
     def disassociate_view(self, request):
         context = {
             'current_app': self.admin_site.name,
         }
-        template = 'admin/projects/address/disassociate.html'
+        template = 'admin/aws/address/disassociate.html'
         return render(request, template, context)
 
 
@@ -92,10 +92,10 @@ class InstanceAdmin(admin.ModelAdmin):
 
         context = {
             'current_app': self.admin_site.name,
-            'app_label': 'projects',
+            'app_label': 'aws',
             'instances': instances,
         }
-        template = 'admin/projects/instance/list.html'
+        template = 'admin/aws/instance/list.html'
         return render(request, template, context)
 
     def get_urls(self):
@@ -114,51 +114,51 @@ class InstanceAdmin(admin.ModelAdmin):
     def launch_view(self, request):
         context = {
             'current_app': self.admin_site.name,
-            'app_label': 'projects',
+            'app_label': 'aws',
         }
-        template = 'admin/projects/instance/launch.html'
+        template = 'admin/aws/instance/launch.html'
         return render(request, template, context)
 
     def build_view(self, request):
         context = {
             'current_app': self.admin_site.name,
         }
-        template = 'admin/projects/instance/build.html'
+        template = 'admin/aws/instance/build.html'
         return render(request, template, context)
 
     def project_view(self, request):
         context = {
             'current_app': self.admin_site.name,
         }
-        template = 'admin/projects/instance/project.html'
+        template = 'admin/aws/instance/project.html'
         return render(request, template, context)
 
     def reboot_view(self, request):
         context = {
             'current_app': self.admin_site.name,
         }
-        template = 'admin/projects/instance/reboot.html'
+        template = 'admin/aws/instance/reboot.html'
         return render(request, template, context)
 
     def start_view(self, request):
         context = {
             'current_app': self.admin_site.name,
         }
-        template = 'admin/projects/instance/start.html'
+        template = 'admin/aws/instance/start.html'
         return render(request, template, context)
 
     def stop_view(self, request):
         context = {
             'current_app': self.admin_site.name,
         }
-        template = 'admin/projects/instance/stop.html'
+        template = 'admin/aws/instance/stop.html'
         return render(request, template, context)
 
     def terminate_view(self, request):
         context = {
             'current_app': self.admin_site.name,
         }
-        template = 'admin/projects/instance/terminate.html'
+        template = 'admin/aws/instance/terminate.html'
         return render(request, template, context)
 
 
@@ -192,7 +192,7 @@ class KeyAdmin(admin.ModelAdmin):
             aws_key = [key for key in all_key_pairs if key.name == new_key][0]
             Key.objects.create(name=aws_key.name)
 
-        return redirect('/admin/projects/key/')
+        return redirect('/admin/aw/key/')
 
 
 class LinuxUserAdmin(admin.ModelAdmin):
@@ -247,7 +247,7 @@ class SecurityGroupAdmin(admin.ModelAdmin):
             aws_group = [group for group in all_security_groups if group.id == new_group_id][0]
             SecurityGroup.objects.create(id=aws_group.id, name=aws_group.name, description=aws_group.description)
 
-        return redirect('/admin/projects/securitygroup/')
+        return redirect('/admin/aws/securitygroup/')
 
 
 admin.site.register(Address, AddressAdmin)
