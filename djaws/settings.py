@@ -129,6 +129,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
 
     'djcelery',
+    'south',
 
     'aws',
 )

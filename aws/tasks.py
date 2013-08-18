@@ -12,19 +12,36 @@ def tag_reservation_task(reservation, name):
 
 
 @task()
-def build_task(build, name, count=1):
+def build_task(build=None, form=None, name=None, count=1):
     conn = boto.connect_ec2()
     image = conn.get_image(image_id=build.image.image_id)
 
-    kwargs = {
-        'key_name': build.key.name,
-        'instance_type': build.get_size_display(),
-        'security_group_ids': [sg.name for sg in build.security_groups.all()],
-    }
-    if build.user_data:
-        kwargs['user_data'] = build.user_data.data
-    if build.zone:
-        kwargs['placement'] = build.get_zone_display()
+    if build:
+        if not name:
+            name = 'from-build'
+        kwargs = {
+            'key_name': build.key.name,
+            'instance_type': build.get_size_display(),
+            'security_group_ids': [sg.name for sg in build.security_groups.all()],
+        }
+        if build.user_data:
+            kwargs['user_data'] = build.user_data.data
+        if build.zone:
+            kwargs['placement'] = build.get_zone_display()
+    elif form:
+        if not name:
+            name = 'from-form'
+        kwargs = {
+            'key_name': build.key.name,
+            'instance_type': build.get_size_display(),
+            'security_group_ids': [sg.name for sg in build.security_groups.all()],
+        }
+        if build.user_data:
+            kwargs['user_data'] = build.user_data.data
+        if build.zone:
+            kwargs['placement'] = build.get_zone_display()
+    else:
+        pass
     if count > 1:
         kwargs['min_count'] = count
         kwargs['max_count'] = count

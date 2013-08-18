@@ -44,12 +44,12 @@ class Build(models.Model):
     name = models.CharField(max_length=20)
     size = models.CharField(max_length=2, choices=SIZE_CHOICES)
     image = models.ForeignKey('aws.Image')
-    key = models.ForeignKey('aws.Key', null=True, on_delete=models.SET_NULL)
+    key = models.ForeignKey('aws.Key')
     zone = models.CharField(max_length=1, choices=ZONE_CHOICES, blank=True)
     security_groups = models.ManyToManyField('aws.SecurityGroup')
-    group = models.ForeignKey('aws.Group')
-    python_bundle = models.ForeignKey('aws.PythonBundle')
-    user_data = models.ForeignKey('aws.Script')
+    group = models.ForeignKey('aws.Group', null=True, blank=True, on_delete=models.SET_NULL)
+    python_bundle = models.ForeignKey('aws.PythonBundle', null=True, blank=True, on_delete=models.SET_NULL)
+    user_data = models.ForeignKey('aws.Script', null=True, blank=True, on_delete=models.SET_NULL)
     upgrade = models.CharField(max_length=2, choices=UPGRADE_CHOICES, blank=True)
 
     class Meta:

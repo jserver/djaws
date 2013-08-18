@@ -1,5 +1,8 @@
+from django import forms
 from django.conf.urls import patterns
 from django.contrib import admin
+from django.forms.models import modelform_factory
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 
 import boto
@@ -7,6 +10,8 @@ import boto
 from aws.models import (Address, Build, Bundle, Group, Image,
                         Instance, Key, LinuxUser, Project,
                         PythonBundle, Script, SecurityGroup)
+from aws.tasks import build_task
+from aws.utils import load_keys, load_security_groups
 
 
 class AddressAdmin(admin.ModelAdmin):
@@ -102,6 +107,7 @@ class InstanceAdmin(admin.ModelAdmin):
         urls = super(InstanceAdmin, self).get_urls()
         custom_urls = patterns('',
             (r'^launch/$', self.admin_site.admin_view(self.launch_view)),
+            (r'^launching/$', self.admin_site.admin_view(self.launching_view)),
             (r'^build/$', self.admin_site.admin_view(self.build_view)),
             (r'^project/$', self.admin_site.admin_view(self.project_view)),
             (r'^reboot/$', self.admin_site.admin_view(self.reboot_view)),
@@ -112,11 +118,35 @@ class InstanceAdmin(admin.ModelAdmin):
         return custom_urls + urls
 
     def launch_view(self, request):
+        LaunchForm = modelform_factory(Build,
+                                       exclude=('name',),
+                                       widgets={'security_groups': forms.CheckboxSelectMultiple()})
+        if request.method == 'POST':
+            form = LaunchForm(request.POST)
+            if form.is_valid():
+                # What to do, what to do
+                # ...
+                result = build_task.delay(form=form)
+                return HttpResponseRedirect('/admin/aws/instance/launching/?id=%s' % result) # Redirect after POST
+        else:
+            form = LaunchForm()
+
         context = {
             'current_app': self.admin_site.name,
             'app_label': 'aws',
+            'form': form,
         }
         template = 'admin/aws/instance/launch.html'
+        return render(request, template, context)
+
+    def launching_view(self, request):
+        task_id = request.GET.get('id', '')
+        context = {
+            'current_app': self.admin_site.name,
+            'app_label': 'aws',
+            'task_id': task_id,
+        }
+        template = 'admin/aws/instance/launching.html'
         return render(request, template, context)
 
     def build_view(self, request):
@@ -176,23 +206,8 @@ class KeyAdmin(admin.ModelAdmin):
         return custom_urls + urls
 
     def reload_view(self, request):
-        conn = boto.connect_ec2()
-        all_key_pairs = conn.get_all_key_pairs()
-        aws_keys = set(key.name for key in all_key_pairs)
-
-        keys = Key.objects.all()
-        dj_keys = set(key.name for key in keys)
-
-        deleted_keys = dj_keys.difference(aws_keys)
-        if deleted_keys:
-            Key.objects.filter(name__in=deleted_keys).delete()
-
-        new_keys = aws_keys.difference(dj_keys)
-        for new_key in new_keys:
-            aws_key = [key for key in all_key_pairs if key.name == new_key][0]
-            Key.objects.create(name=aws_key.name)
-
-        return redirect('/admin/aw/key/')
+        load_keys()
+        return redirect('/admin/aws/key/')
 
 
 class LinuxUserAdmin(admin.ModelAdmin):
@@ -231,22 +246,7 @@ class SecurityGroupAdmin(admin.ModelAdmin):
         return custom_urls + urls
 
     def reload_view(self, request):
-        conn = boto.connect_ec2()
-        all_security_groups = conn.get_all_security_groups()
-        aws_groups = set(grp.id for grp in all_security_groups)
-
-        security_groups = SecurityGroup.objects.all()
-        dj_groups = set(grp.id for grp in security_groups)
-
-        deleted_groups = dj_groups.difference(aws_groups)
-        if deleted_groups:
-            SecurityGroup.objects.filter(id__in=deleted_groups).delete()
-
-        new_groups = aws_groups.difference(dj_groups)
-        for new_group_id in new_groups:
-            aws_group = [group for group in all_security_groups if group.id == new_group_id][0]
-            SecurityGroup.objects.create(id=aws_group.id, name=aws_group.name, description=aws_group.description)
-
+        load_security_groups()
         return redirect('/admin/aws/securitygroup/')
 
 
