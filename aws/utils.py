@@ -3,6 +3,13 @@ import boto
 from aws.models import Key, SecurityGroup
 
 
+def get_choice(choices, choice):
+    for item in choices:
+        if item[0] == choice:
+            return item[1]
+    return None
+
+
 def load_keys():
     conn = boto.connect_ec2()
     all_key_pairs = conn.get_all_key_pairs()
