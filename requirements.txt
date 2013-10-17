@@ -9,5 +9,6 @@ bpython
 django-celery
 django-taggit
 psycopg2
+pytz
 requests
 yolk
