@@ -8,7 +8,7 @@
         "group": 2,
         "name": "django",
         "zone": "b",
-        "image": 2,
+        "image": 4,
         "user_data": 1,
         "key": 1,
         "security_groups": [
@@ -227,7 +227,7 @@
     "pk": 1,
     "model": "aws.image",
     "fields": {
-        "image_id": "ami-23d9a94a",
+        "image_id": "ami-a73264ce",
         "name": "precise"
     }
 },
@@ -235,12 +235,20 @@
     "pk": 2,
     "model": "aws.image",
     "fields": {
-        "image_id": "ami-10314d79",
+        "image_id": "ami-ad83d7c4",
         "name": "raring"
     }
 },
 {
     "pk": 3,
+    "model": "aws.image",
+    "fields": {
+        "image_id": "ami-ad184ac4",
+        "name": "saucy"
+    }
+},
+{
+    "pk": 4,
     "model": "aws.image",
     "fields": {
         "image_id": "ami-9e95e8f7",
