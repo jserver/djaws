@@ -107,8 +107,9 @@ class Group(models.Model):
 
 
 class Image(models.Model):
-    image_id = models.CharField(max_length=20)
     name = models.CharField(max_length=20)
+    image_id = models.CharField(max_length=20)
+    login = models.CharField(max_length=10)
 
     class Meta:
         ordering = ('name',)

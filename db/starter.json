@@ -8,7 +8,7 @@
         "group": 2,
         "name": "django",
         "zone": "b",
-        "image": 4,
+        "image": 3,
         "user_data": 1,
         "key": 1,
         "security_groups": [
@@ -227,7 +227,8 @@
     "pk": 1,
     "model": "aws.image",
     "fields": {
-        "image_id": "ami-a73264ce",
+        "image_id": "ami-0568456c",
+        "login": "ubuntu",
         "name": "precise"
     }
 },
@@ -235,23 +236,17 @@
     "pk": 2,
     "model": "aws.image",
     "fields": {
-        "image_id": "ami-ad83d7c4",
-        "name": "raring"
+        "image_id": "ami-1f7e4f76",
+        "login": "ubuntu",
+        "name": "saucy"
     }
 },
 {
     "pk": 3,
     "model": "aws.image",
     "fields": {
-        "image_id": "ami-ad184ac4",
-        "name": "saucy"
-    }
-},
-{
-    "pk": 4,
-    "model": "aws.image",
-    "fields": {
-        "image_id": "ami-9e95e8f7",
+        "image_id": "ami-0da18864",
+        "login": "admin",
         "name": "wheezy"
     }
 },
@@ -287,7 +282,7 @@
     "pk": 1,
     "model": "aws.pythonbundle",
     "fields": {
-        "packages": "pyflakes virtualenv virtualenvwrapper yolk",
+        "packages": "flake8 virtualenv virtualenvwrapper",
         "name": "basic"
     }
 },

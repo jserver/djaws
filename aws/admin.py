@@ -80,7 +80,7 @@ class GroupAdmin(admin.ModelAdmin):
 
 
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ('name', 'image_id')
+    list_display = ('name', 'image_id', 'login')
 
 
 class InstanceAdmin(admin.ModelAdmin):
